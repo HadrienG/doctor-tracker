@@ -1,16 +1,19 @@
 <template>
     <div id="app">
         <Tasks msg="Doctor Tracker"/>
+        <Timer/>
     </div>
 </template>
 
 <script>
 import Tasks from './components/Tasks.vue'
+import Timer from './components/Timer.vue'
 
 export default {
   name: 'app',
   components: {
-    Tasks
+    Tasks,
+    Timer
   }
 }
 </script>

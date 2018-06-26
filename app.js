@@ -8,10 +8,13 @@ if (process.env.NODE_ENV === 'DEV') {
 var menubar = require('menubar')
 
 var mb = menubar({
-    index: url}
-)
+    index: url,
+    width: 200,
+    height: 300,
+    icon: `${process.cwd()}/src/assets/transparent.png`
+})
 
 mb.on('ready', function ready () {
-
+    mb.tray.setTitle('DT');
     // your app code here
 })
