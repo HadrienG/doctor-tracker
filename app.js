@@ -10,8 +10,10 @@ var menubar = require('menubar')
 var mb = menubar({
     index: url,
     width: 200,
-    height: 300,
-    icon: `${process.cwd()}/src/assets/transparent.png`
+    height: 120,
+    icon: `${process.cwd()}/src/assets/transparent.png`,
+    transparent: false
+
 })
 
 mb.on('ready', function ready () {
