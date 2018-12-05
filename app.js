@@ -1,22 +1,92 @@
-let url
-if (process.env.NODE_ENV === 'DEV') {
-    url = 'http://localhost:8080/'
+const { app, BrowserWindow, Tray } = require("electron");
+const path = require("path");
+
+const assets = path.join(__dirname, "src/assets/");
+
+let url;
+if (process.env.NODE_ENV === "DEV") {
+  url = "http://localhost:8080/";
 } else {
-    url = `file://${process.cwd()}/dist/index.html`
+  url = `file://${process.cwd()}/dist/index.html`;
 }
 
-var menubar = require('menubar')
+let tray = undefined;
+let window = undefined;
 
-var mb = menubar({
-    index: url,
+// Don't show the app in the doc
+app.dock.hide();
+
+app.on("ready", () => {
+  createTray();
+  createWindow();
+});
+
+const createTray = () => {
+  tray = new Tray(path.join(assets, "transparent.png"));
+  tray.setTitle("doc");
+  tray.on("right-click", toggleWindow);
+  tray.on("double-click", toggleWindow);
+  tray.on("click", function(event) {
+    toggleWindow();
+
+    // Show devtools when command clicked
+    if (window.isVisible() && process.defaultApp && event.metaKey) {
+      window.openDevTools({ mode: "detach" });
+    }
+  });
+};
+
+const createWindow = () => {
+  window = new BrowserWindow({
     width: 200,
     height: 120,
-    icon: `${process.cwd()}/src/assets/transparent.png`,
-    transparent: false
+    show: false,
+    frame: false,
+    fullscreenable: false,
+    resizable: false,
+    transparent: false,
+    webPreferences: {
+      // Prevents renderer process code from not running when window is
+      // hidden
+      backgroundThrottling: false
+    }
+  });
+  window.loadURL(url);
 
-})
+  // Hide the window when it loses focus
+  window.on("blur", () => {
+    if (!window.webContents.isDevToolsOpened()) {
+      window.hide();
+    }
+  });
+};
 
-mb.on('ready', function ready () {
-    mb.tray.setTitle('DT');
-    // your app code here
-})
+const toggleWindow = () => {
+  if (window.isVisible()) {
+    window.hide();
+  } else {
+    showWindow();
+  }
+};
+
+const showWindow = () => {
+  const position = getWindowPosition();
+  window.setPosition(position.x, position.y, false);
+  window.show();
+  window.focus();
+};
+
+const getWindowPosition = () => {
+  const windowBounds = window.getBounds();
+  const trayBounds = tray.getBounds();
+
+  // Center window horizontally below the tray icon
+  const x = Math.round(
+    trayBounds.x + trayBounds.width / 2 - windowBounds.width / 2
+  );
+
+  // Position window 4 pixels vertically below the tray icon
+  const y = Math.round(trayBounds.y + trayBounds.height + 4);
+
+  return { x: x, y: y };
+};

@@ -60,8 +60,8 @@ export default {
         this.stop_timer();
         this.remaining = 0;
         // notification
-        new Notification("Title", {
-          body: "Lorem Ipsum Dolor Sit Amet"
+        new Notification("doctor-tracker", {
+          body: "Timer Done"
         });
       }
     }
