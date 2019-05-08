@@ -1,13 +1,14 @@
-const { app, BrowserWindow, Tray } = require("electron");
+const { app, BrowserWindow, Menu, Tray } = require("electron");
 const path = require("path");
-
-const assets = path.join(__dirname, "src/assets/");
 
 let url;
 if (process.env.NODE_ENV === "DEV") {
+  // url = `file://${process.cwd()}/dist/index.html`;
   url = "http://localhost:8080/";
+  assets = path.join(__dirname, "src/assets/");
 } else {
   url = `file://${process.cwd()}/dist/index.html`;
+  assets = `file://${process.cwd()}/`;
 }
 
 let tray = undefined;
@@ -16,14 +17,19 @@ let window = undefined;
 // Don't show the app in the doc
 app.dock.hide();
 
+// Quit the app when the window is closed
+app.on("window-all-closed", () => {
+  app.quit();
+});
+
 app.on("ready", () => {
   createTray();
   createWindow();
 });
 
 const createTray = () => {
-  tray = new Tray(path.join(assets, "transparent.png"));
-  tray.setTitle("doc");
+  tray = new Tray(path.join(assets, "icon.png"));
+
   tray.on("right-click", toggleWindow);
   tray.on("double-click", toggleWindow);
   tray.on("click", function(event) {
@@ -59,6 +65,7 @@ const createWindow = () => {
       window.hide();
     }
   });
+  window.setVisibleOnAllWorkspaces(true);
 };
 
 const toggleWindow = () => {
