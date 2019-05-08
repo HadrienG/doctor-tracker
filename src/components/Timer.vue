@@ -1,6 +1,11 @@
 <template>
     <div class="timer">
         <h3>Doctor Tracker</h3>
+
+        <button id="settings" @click="show">
+            <img src="../assets/cog.svg" alt="settings">
+        </button>
+
         <div id="timer">
             <div id="minutes" class="inline">{{ minutes }}</div>
             <div id="sep" class="inline">:</div>
@@ -88,6 +93,11 @@ h3 {
     margin-top: 0;
     margin-bottom: 5px;
 }
+#settings {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+}
 .inline {
     font-size: 20px;
     display: inline-block;
@@ -98,7 +108,7 @@ h3 {
     text-align: center;
     margin-right: 10px;
 }
-#buttons button {
+button {
     width: 30px;
     height: 30px;
     background: none;
