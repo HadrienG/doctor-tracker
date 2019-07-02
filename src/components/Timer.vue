@@ -2,7 +2,7 @@
     <div class="timer">
         <h3>Doctor Tracker</h3>
 
-        <button id="settings" @click="show">
+        <button id="settings">
             <img src="../assets/cog.svg" alt="settings">
         </button>
 
