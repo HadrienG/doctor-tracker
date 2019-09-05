@@ -1,8 +1,10 @@
 <template>
     <div>
-        <button id="settings">
-            <img src="./assets/cog.svg" alt="settings">
-        </button>
+        <router-link to="/settings">
+            <button id="settings">
+                <img src="./assets/cog.svg" alt="settings">
+            </button>
+        </router-link>
         <router-view/>
     </div>
 </template>
