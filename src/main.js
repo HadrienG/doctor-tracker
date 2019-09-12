@@ -1,18 +1,27 @@
 import Vue from "vue";
-import App from "./App.vue";
-// import VueRouter from "vue-router";
+import VueRouter from "vue-router";
+import VueElectron from "vue-electron";
 
-// Vue.use(VueRouter);
+import App from "./App.vue";
+import Timer from "./components/Timer.vue";
+import Settings from "./components/Settings.vue";
+
+Vue.use(VueRouter);
+Vue.use(VueElectron);
 Vue.config.productionTip = false;
 
-// const router = new VueRouter({
-//   routes: [
-//     { path: "/", component: Timer },
-//     { path: "/settings", component: Settings }
-//   ]
-// });
+const routes = [
+    { path: "/", name: "timer", component: Timer },
+    { path: "/settings", name: "settings", component: Settings }
+];
+
+const router = new VueRouter({
+    routes
+});
 
 new Vue({
-  // router
-  render: h => h(App)
-}).$mount("#app");
+    el: "#app",
+    router,
+    template: "<App/>",
+    components: { App }
+});

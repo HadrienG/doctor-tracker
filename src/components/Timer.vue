@@ -2,10 +2,6 @@
     <div class="timer">
         <h3>Doctor Tracker</h3>
 
-        <button id="settings">
-            <img src="../assets/cog.svg" alt="settings">
-        </button>
-
         <div id="timer">
             <div id="minutes" class="inline">{{ minutes }}</div>
             <div id="sep" class="inline">:</div>
