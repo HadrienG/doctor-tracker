@@ -1,11 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import VueElectron from "vue-electron";
 
 import App from "./App.vue";
 import Timer from "./components/Timer.vue";
 import Settings from "./components/Settings.vue";
 
 Vue.use(VueRouter);
+Vue.use(VueElectron);
 Vue.config.productionTip = false;
 
 const routes = [
